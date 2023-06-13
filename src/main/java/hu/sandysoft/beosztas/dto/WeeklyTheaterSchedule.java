@@ -7,5 +7,5 @@ import java.util.Map;
 
 @Data
 public class WeeklyTheaterSchedule {
-    private Map<String, List<Performance>> theaterSchedule;
+    private Map<String, Map<String, String>> theaterSchedule;
 }

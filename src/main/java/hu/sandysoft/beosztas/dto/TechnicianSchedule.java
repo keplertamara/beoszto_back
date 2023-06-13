@@ -8,5 +8,5 @@ import java.util.Map;
 @Data
 public class TechnicianSchedule {
 
-    private Map<String, List<String>> workerSchedule;
+    private Map<String, List<Integer>> workerSchedule;
 }

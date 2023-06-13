@@ -7,6 +7,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
-public class ErrorResponse {
+public class ErrorResponse extends Throwable {
     private String errorMessage;
 }

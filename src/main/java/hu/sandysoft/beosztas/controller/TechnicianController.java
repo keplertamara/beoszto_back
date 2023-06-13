@@ -46,7 +46,7 @@ public class TechnicianController {
     @DeleteMapping("/delete_technician_by_performance/{performance}")
     public ResponseEntity<?> deleteTechnicianByPerformance(@PathVariable String performance) {
         try {
-            technicianRepository.deleteTechnicianByName(performance);
+            technicianRepository.deleteTechnicianByPerformance(performance);
             return new ResponseEntity<>("Technicians deleted successfully", HttpStatus.OK);
         }
         catch (Exception e) {
