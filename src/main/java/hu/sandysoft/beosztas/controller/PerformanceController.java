@@ -35,9 +35,13 @@ public class PerformanceController {
 
     @DeleteMapping("/delete_performance/{name}")
     public ResponseEntity<?> deletePerformance(@PathVariable String name) {
+        return handleEvent(() ->  performanceRepository.deletePerformanceByName(name), "Performance deleted successfully");
+    }
+
+    private<T> ResponseEntity<?> handleEvent(ExceptionSupplier<T> f, String body) {
         try {
-            performanceRepository.deletePerformanceByName(name);
-            return new ResponseEntity<>("Performance deleted successfully", HttpStatus.OK);
+            f.get();
+            return new ResponseEntity<>(body, HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse("Performance not found"), HttpStatus.NOT_FOUND);

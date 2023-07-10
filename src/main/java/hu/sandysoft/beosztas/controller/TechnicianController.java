@@ -34,23 +34,21 @@ public class TechnicianController {
 
     @DeleteMapping("/delete_technician/{name}")
     public ResponseEntity<?> deleteTechnician(@PathVariable String name) {
-        try {
-            technicianRepository.deleteTechnicianByName(name);
-            return new ResponseEntity<>("Technician deleted successfully", HttpStatus.OK);
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Performance not found"), HttpStatus.NOT_FOUND);
-        }
+        return handleEvent(() -> technicianRepository.deleteTechnicianByName(name),  "Technician deleted successfully");
     }
 
     @DeleteMapping("/delete_technician_by_performance/{performance}")
     public ResponseEntity<?> deleteTechnicianByPerformance(@PathVariable String performance) {
+        return handleEvent(() -> technicianRepository.deleteTechnicianByPerformance(performance), "Technicians deleted successfully");
+    }
+
+    private<T> ResponseEntity<?> handleEvent(ExceptionSupplier<T> f, String body) {
         try {
-            technicianRepository.deleteTechnicianByPerformance(performance);
-            return new ResponseEntity<>("Technicians deleted successfully", HttpStatus.OK);
+            f.get();
+            return new ResponseEntity<>(body, HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Performance not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponse("Technician not found"), HttpStatus.NOT_FOUND);
         }
     }
 }
